@@ -5,27 +5,29 @@
 
       <h1 class="title has-text-centered">Typing Game</h1>
 
+      <progress class="progress is-primary" value=0 max={{targetTime}} id="progress-bar"></progress>
+
       <p style="color: brown; font-weight: bolder; font-size: 3vh;">{{typedText}}</p>
       <p style="font-size: 3vh;" class="has-text-centered" id="text">{{randomText}}</p>
 
       <div class="field">
-        <input class="input" (input)="onInput($any($event.target).value)" id="textInput" />
+        <input class="input" (input)="onInput($any($event.target).value)" id="textInput" disabled />
       </div>
 
+      <button class="button is-link is-fullwidth is-rounded" (click)="onStartGame()" id="startButton">Start
+        Game</button>
 
       <div class="box" *ngIf="!(finished)">
         <div class="has-text-centered">
-          <h1 class="title" id="progress">{{progress}}</h1>
+          <h1 class="title" id="progress" style="background-color:aqua">{{progress}}</h1>
         </div>
       </div>
-
-
-
 
       <div class="box" style="background-color:rgb(12, 148, 12);" *ngIf="finished">
         <h1 style="color:yellow" class="title has-text-centered" id="result">You Won!!</h1>
         <button class="button is-link is-rounded is-fullwidth" (click)="onReset()">Reset</button>
       </div>
+
 
     </div>
 
