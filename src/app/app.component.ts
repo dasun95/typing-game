@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { faker } from '@faker-js/faker';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,15 +10,16 @@ export class AppComponent {
 
   title = 'typing-game';
 
-  randomText: string = faker.lorem.sentence(5);
+  randomText: string = faker.lorem.sentence(4);
   isMatched:boolean = false;
   typedText:string = '';
   progress: string = '';
+
   
   finished: boolean = false;
 
   targetTime:number = this.randomText.length*500; 
-  startTime = Date.now();
+  startTime:number = Date.now();
   
   timer: any;
  
@@ -28,21 +28,30 @@ export class AppComponent {
 
     let startButton = (document.getElementById('startButton') as HTMLButtonElement)
     startButton.disabled = true;
+
     
     let input = (document.getElementById("textInput") as HTMLInputElement);
     input.disabled = false;
+    input.select();
 
-    const timerTemp = setInterval(function (startTime: any, maxTime: any) {
-      let filled = document.getElementById('progress-bar') as HTMLProgressElement
-      filled.value = Date.now() - startTime;
-      console.log('failed :'+filled.value + 'max time'+ maxTime);
-      if (filled.value >= maxTime) {
+    let t1 = this.startTime
+    let t2 = this.targetTime
+
+    const timerTemp = setInterval(function () { timeCount(t1, t2) }, 1000);
+    
+    let filledPortion = document.getElementById('progress-bar') as HTMLProgressElement
+    let display = (document.getElementById('progress') as HTMLHeadingElement);
+
+    function timeCount(startTime: any, targetTime: any) {
+      filledPortion.value = Date.now() - startTime;
+      if (filledPortion.value >= targetTime) {
         clearInterval(timerTemp);
-        let display = (document.getElementById('progress') as HTMLHeadingElement);
         display.innerHTML = 'GAME OVER!!';
-        // display.style();
+        let input = (document.getElementById("textInput") as HTMLInputElement);
+        input.disabled = true;
       }
-    }, 1000, this.startTime, this.targetTime);
+    }
+   
     this.timer = timerTemp;
   }
   
@@ -53,7 +62,7 @@ export class AppComponent {
 
     this.typedText = value;
 
-    this.isMatched = value == this.randomText.slice(0, value.length);
+    this.isMatched = value === this.randomText.slice(0, value.length);
 
     if (this.isMatched) {
       let newParagraph:string = this.randomText.slice(value.length);
@@ -65,7 +74,7 @@ export class AppComponent {
       this.progress = 'It is going wrong!';
     }
 
-    if (this.randomText==this.typedText) {
+    if (this.randomText===this.typedText) {
       this.finished = true;
       input.disabled = true;
       clearInterval(this.timer);

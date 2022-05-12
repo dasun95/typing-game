@@ -7,8 +7,8 @@
 
       <progress class="progress is-primary" value=0 max={{targetTime}} id="progress-bar"></progress>
 
-      <p style="color: brown; font-weight: bolder; font-size: 3vh;">{{typedText}}</p>
-      <p style="font-size: 3vh;" class="has-text-centered" id="text">{{randomText}}</p>
+      <span style="color: brown; font-weight: bolder; font-size: 3vh;">{{typedText}}</span>
+      <span style="font-size: 3vh;" class="has-text-centered" id="text">{{randomText}}</span>
 
       <div class="field">
         <input class="input" (input)="onInput($any($event.target).value)" id="textInput" disabled />
@@ -23,10 +23,12 @@
         </div>
       </div>
 
-      <div class="box" style="background-color:rgb(12, 148, 12);" *ngIf="finished">
+      <div class="box" id="reset" style="background-color:rgb(12, 148, 12);" *ngIf="finished">
         <h1 style="color:yellow" class="title has-text-centered" id="result">You Won!!</h1>
-        <button class="button is-link is-rounded is-fullwidth" (click)="onReset()">Reset</button>
       </div>
+
+      <button class="button is-link is-rounded is-fullwidth" (click)="onReset()">Reset</button>
+
 
 
     </div>
