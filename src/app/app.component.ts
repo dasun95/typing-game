@@ -10,7 +10,7 @@ export class AppComponent {
 
   title = 'typing-game';
 
-  randomText: string = faker.lorem.sentence(4);
+  randomText: string = faker.lorem.sentence();
   isMatched:boolean = false;
   typedText:string = '';
   progress: string = '';
